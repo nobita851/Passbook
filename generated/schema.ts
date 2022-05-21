@@ -42,13 +42,13 @@ export class Loan extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get actions(): Array<string> {
+  get actions(): string {
     let value = this.get("actions");
-    return value!.toStringArray();
+    return value!.toString();
   }
 
-  set actions(value: Array<string>) {
-    this.set("actions", Value.fromStringArray(value));
+  set actions(value: string) {
+    this.set("actions", Value.fromString(value));
   }
 }
 
@@ -83,13 +83,13 @@ export class Deposit extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get actions(): Array<string> {
+  get actions(): string {
     let value = this.get("actions");
-    return value!.toStringArray();
+    return value!.toString();
   }
 
-  set actions(value: Array<string>) {
-    this.set("actions", Value.fromStringArray(value));
+  set actions(value: string) {
+    this.set("actions", Value.fromString(value));
   }
 }
 

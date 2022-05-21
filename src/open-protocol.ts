@@ -36,10 +36,10 @@ export function handleDepositAdded(event: DepositAdded): void {
   action.date = date.toString();
   action.save();
 
-  deposit.actions.push(event.transaction.hash.toHexString());
+  deposit.actions = event.transaction.hash.toHex();
   deposit.save();
 
-  user.deposits.push(event.transaction.hash.toHexString());
+  user.deposits.push(event.transaction.hash.toHex());
   user.save();
 }
 
@@ -66,10 +66,10 @@ export function handleDepositWithdrawal(event: DepositWithdrawal): void {
   action.date = date.toString();
   action.save();
 
-  deposit.actions.push(event.transaction.hash.toHexString());
+  deposit.actions = event.transaction.hash.toHex();
   deposit.save();
 
-  user.deposits.push(event.transaction.hash.toHexString());
+  user.deposits.push(event.transaction.hash.toHex());
   user.save();
 }
 
@@ -93,10 +93,10 @@ export function handleNewDeposit(event: NewDeposit): void {
   action.date = date.toString();
   action.save();
 
-  deposit.actions.push(event.transaction.hash.toHexString());
+  deposit.actions = event.transaction.hash.toHex();
   deposit.save()
 
-  user.deposits.push(event.transaction.hash.toHexString());
+  user.deposits.push(event.transaction.hash.toHex());
   user.save()
 }
 
@@ -122,10 +122,10 @@ export function handleLiquidation(event: Liquidation): void {
   action.date = date.toString();
   action.save();
 
-  loan.actions.push(event.transaction.hash.toHexString());
+  loan.actions = event.transaction.hash.toHex();
   loan.save();
 
-  user.loans.push(event.transaction.hash.toHexString());
+  user.loans.push(event.transaction.hash.toHex());
   user.save();
 }
 
@@ -151,10 +151,10 @@ export function handleAddCollateral(event: AddCollateral): void {
   action.date = date.toString()
   action.save();
 
-  loan.actions.push(event.transaction.hash.toHexString());
+  loan.actions = event.transaction.hash.toHex();
   loan.save();
 
-  user.loans.push(event.transaction.hash.toHexString());
+  user.loans.push(event.transaction.hash.toHex());
   user.save();
 }
 
@@ -180,10 +180,10 @@ export function handleMarketSwapped(event: MarketSwapped): void {
   action.date = date.toString()
   action.save();
 
-  loan.actions.push(event.transaction.hash.toHexString());
+  loan.actions = event.transaction.hash.toHex();
   loan.save();
 
-  user.loans.push(event.transaction.hash.toHexString());
+  user.loans.push(event.transaction.hash.toHex());
   user.save();
 }
 
@@ -209,10 +209,10 @@ export function handleWithdrawCollateral(event: WithdrawCollateral): void {
   action.date = date.toString()
   action.save();
 
-  loan.actions.push(event.transaction.hash.toHexString());
+  loan.actions = event.transaction.hash.toHex();
   loan.save();
 
-  user.loans.push(event.transaction.hash.toHexString());
+  user.loans.push(event.transaction.hash.toHex());
   user.save();
 }
 
@@ -238,10 +238,10 @@ export function handleWithdrawPartialLoan(event: WithdrawPartialLoan): void {
   action.date = date.toString()
   action.save();
 
-  loan.actions.push(event.transaction.hash.toHexString());
+  loan.actions = event.transaction.hash.toHex();
   loan.save();
 
-  user.loans.push(event.transaction.hash.toHexString());
+  user.loans.push(event.transaction.hash.toHex());
   user.save();
 }
 
@@ -265,10 +265,10 @@ export function handleNewLoan(event: NewLoan): void {
   action.date = date.toString();
   action.save();
 
-  loan.actions.push(event.transaction.hash.toHexString());
+  loan.actions = event.transaction.hash.toHex();
   loan.save();
 
-  user.loans.push(event.transaction.hash.toHexString());
+  user.loans.push(event.transaction.hash.toHex());
   user.save();
 }
 
@@ -295,9 +295,9 @@ export function handleLoanRepaid(event: LoanRepaid): void {
   action.date = date.toString();
   action.save();
 
-  loan.actions.push(event.transaction.hash.toHexString());
+  loan.actions = event.transaction.hash.toHex();
   loan.save();
 
-  user.loans.push(event.transaction.hash.toHexString());
+  user.loans.push(event.transaction.hash.toHex());
   user.save();
 }

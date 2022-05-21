@@ -36,7 +36,7 @@ type User @entity {
   "Wallet address of user"
   address: Bytes!
   "Loans borrowed by the user"
-  loans: [Loan!]!
+  loans: [Loan!]
   "Deposits made by the user"
-  deposits: [Deposit!]!
+  deposits: [Deposit!]
 }
