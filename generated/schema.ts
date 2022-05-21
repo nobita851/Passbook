@@ -124,13 +124,13 @@ export class Action extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get hash(): Bytes {
+  get hash(): string {
     let value = this.get("hash");
-    return value!.toBytes();
+    return value!.toString();
   }
 
-  set hash(value: Bytes) {
-    this.set("hash", Value.fromBytes(value));
+  set hash(value: string) {
+    this.set("hash", Value.fromString(value));
   }
 
   get market(): string {
@@ -149,6 +149,15 @@ export class Action extends Entity {
 
   set commitment(value: string) {
     this.set("commitment", Value.fromString(value));
+  }
+
+  get amount(): BigInt {
+    let value = this.get("amount");
+    return value!.toBigInt();
+  }
+
+  set amount(value: BigInt) {
+    this.set("amount", Value.fromBigInt(value));
   }
 
   get action(): string {

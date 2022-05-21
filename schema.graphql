@@ -4,6 +4,7 @@ enum Operation {
   WithdrawDeposit
   NewLoan,
   AddCollateral,
+  WithdrawCollateral,
   SwappedLoan,
   Repaid,
   Liquidated
@@ -21,9 +22,10 @@ type Deposit @entity {
 
 type Action @entity {
   id: ID!
-  hash: Bytes!
+  hash: String!
   market: String!
   commitment: String!
+  amount: BigInt!
   action: Operation!
   timestamp: Int!
 }

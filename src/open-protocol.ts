@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { BigInt, log } from "@graphprotocol/graph-ts"
 import {
   OpenProtocol,
   DepositAdded,
@@ -12,21 +12,201 @@ import {
   NewLoan,
   LoanRepaid
 } from "../generated/OpenProtocol/OpenProtocol"
-import { Deposit, Loan, User } from "../generated/schema"
+import { Deposit, Loan, User, Action } from "../generated/schema"
 
-export function handleDepositAdded(event: DepositAdded): void {}
+export function handleDepositAdded(event: DepositAdded): void {
+  let user = User.load(event.params.account.toHex());
+  if (!user) {
+    log.error(
+      `[handleDepositAdded|${event.transaction.hash.toHexString()}] User not found`,
+      []
+    );
+    return;
+  }
 
-export function handleDepositWithdrawal(event: DepositWithdrawal): void {}
+  let deposit = new Deposit(event.transaction.hash.toHex());
+  let action = new Action(event.transaction.hash.toHex());
 
-export function handleNewDeposit(event: NewDeposit): void {}
+  action.hash = event.transaction.hash.toHexString();
+  action.market = event.params.market.toString();
+  action.commitment = event.params.commitment.toString();
+  action.amount = event.params.amount;
+  action.action = "AddToDeposit";
+  action.timestamp = event.params.time.toI64();
+  action.save();
 
-export function handleLiquidation(event: Liquidation): void {}
+  deposit.actions.push(event.transaction.hash.toHexString());
+  deposit.save();
 
-export function handleAddCollateral(event: AddCollateral): void {}
+  user.deposits.push(event.transaction.hash.toHexString());
+  user.save();
+}
 
-export function handleMarketSwapped(event: MarketSwapped): void {}
+export function handleDepositWithdrawal(event: DepositWithdrawal): void {
+  let user = User.load(event.params.account.toHex());
+  if (!user) {
+    log.error(
+      `[handleDepositWithdrawal|${event.transaction.hash.toHexString()}] User not found`,
+      []
+    );
+    return;
+  }
 
-export function handleWithdrawCollateral(event: WithdrawCollateral): void {}
+  let deposit = new Deposit(event.transaction.hash.toHex());
+  let action = new Action(event.transaction.hash.toHex());
+
+  action.hash = event.transaction.hash.toHexString();
+  action.market = event.params.market.toString();
+  action.commitment = event.params.commitment.toString();
+  action.amount = event.params.amount;
+  action.action = "WithdrawDeposit";
+  action.timestamp = event.params.timestamp.toI64();
+  action.save();
+
+  deposit.actions.push(event.transaction.hash.toHexString());
+  deposit.save();
+
+  user.deposits.push(event.transaction.hash.toHexString());
+  user.save();
+}
+
+export function handleNewDeposit(event: NewDeposit): void {
+  let user = User.load(event.params.account.toHex());
+  if (!user) {
+    user = new User(event.params.account.toHex());
+    user.address = event.params.account;
+    user.save();
+  }
+
+  let deposit = new Deposit(event.transaction.hash.toHex());
+  let action = new Action(event.transaction.hash.toHex());
+
+  action.hash = event.transaction.hash.toHexString();
+  action.market = event.params.market.toString();
+  action.commitment = event.params.commitment.toString();
+  action.amount = event.params.amount
+  action.action = "NewDeposit"
+  action.timestamp = event.params.time.toI64()
+  action.save();
+
+  deposit.actions.push(event.transaction.hash.toHexString());
+  deposit.save()
+
+  user.deposits.push(event.transaction.hash.toHexString());
+  user.save()
+}
+
+export function handleLiquidation(event: Liquidation): void {
+  let user = User.load(event.params.account.toHex());
+  if (!user) {
+    log.error(
+      `[handleLiquidation|${event.transaction.hash.toHexString()}] User not found`,
+      []
+    );
+    return;
+  }
+
+  let loan = new Loan(event.transaction.hash.toHex());
+  let action = new Action(event.transaction.hash.toHex());
+
+  action.hash = event.transaction.hash.toHexString();
+  action.market = event.params.market.toString();
+  action.commitment = event.params.commitment.toString();
+  action.amount = event.params.amount;
+  action.action = "Liquidated";
+  action.timestamp = event.params.time.toI64();
+  action.save();
+
+  loan.actions.push(event.transaction.hash.toHexString());
+  loan.save();
+
+  user.loans.push(event.transaction.hash.toHexString());
+  user.save();
+}
+
+export function handleAddCollateral(event: AddCollateral): void {
+  let user = User.load(event.params.account.toHex());
+  if (!user) {
+    log.error(
+      `[handleAddCollateral|${event.transaction.hash.toHexString()}] User not found`,
+      []
+    );
+    return;
+  }
+
+  let loan = new Loan(event.transaction.hash.toHex());
+  let action = new Action(event.transaction.hash.toHex());
+
+  action.hash = event.transaction.hash.toHexString();
+  action.market = event.params.market.toString();
+  action.commitment = event.params.commitment.toString();
+  action.amount = event.params.amount;
+  action.action = "AddCollateral";
+  action.timestamp = event.params.timestamp.toI64();
+  action.save();
+
+  loan.actions.push(event.transaction.hash.toHexString());
+  loan.save();
+
+  user.loans.push(event.transaction.hash.toHexString());
+  user.save();
+}
+
+export function handleMarketSwapped(event: MarketSwapped): void {
+  let user = User.load(event.params.account.toHex());
+  if (!user) {
+    log.error(
+      `[handleMarketSwapped|${event.transaction.hash.toHexString()}] User not found`,
+      []
+    );
+    return;
+  }
+
+  let loan = new Loan(event.transaction.hash.toHex());
+  let action = new Action(event.transaction.hash.toHex());
+
+  action.hash = event.transaction.hash.toHexString();
+  action.market = event.params.currentMarket.toString();
+  action.commitment = event.params.commitment.toString();
+  action.amount = event.params.amount;
+  action.action = "SwappedLoan";
+  action.timestamp = event.params.timestamp.toI64();
+  action.save();
+
+  loan.actions.push(event.transaction.hash.toHexString());
+  loan.save();
+
+  user.loans.push(event.transaction.hash.toHexString());
+  user.save();
+}
+
+export function handleWithdrawCollateral(event: WithdrawCollateral): void {
+  let user = User.load(event.params.account.toHex());
+  if (!user) {
+    log.error(
+      `[handleWithdrawCollateral|${event.transaction.hash.toHexString()}] User not found`,
+      []
+    );
+    return;
+  }
+
+  let loan = new Loan(event.transaction.hash.toHex());
+  let action = new Action(event.transaction.hash.toHex());
+
+  action.hash = event.transaction.hash.toHexString();
+  action.market = event.params.market.toString();
+  action.commitment = event.params.commitment.toString();
+  action.amount = event.params.amount;
+  action.action = "WithdrawCollateral";
+  action.timestamp = event.params.timestamp.toI64();
+  action.save();
+
+  loan.actions.push(event.transaction.hash.toHexString());
+  loan.save();
+
+  user.loans.push(event.transaction.hash.toHexString());
+  user.save();
+}
 
 export function handleWithdrawPartialLoan(event: WithdrawPartialLoan): void {}
 
