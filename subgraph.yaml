@@ -1,191 +1,51 @@
-specVersion: 0.0.1
+specVersion: 0.0.5
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: undefined
+    name: OpenProtocol
     network: chapel
     source:
       address: "0x12bdAC56C03FA27687c6f35E60fC36BecB00850e"
       abi: OpenProtocol
+      startBlock: 18748471
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - BorrowAprAccrued
-        - LoanFee
-        - WithdrawCollateralFee
-        - SavingsAprAccrued
-        - BorrowInterestRateUpdated
-        - DepositInterestRateUpdated
-        - APRupdated
-        - CollateralFactorUpdated
-        - CollateralPreClosureFeesUpdated
-        - CollateralReleaseFeesUpdated
-        - CommitmentAdded
-        - DepositPreClosureFeesUpdated
-        - DepositWithdrawalFeesUpdated
-        - LoanClosureFeesUpdated
-        - LoanIssuanceFeesUpdated
-        - LoanPreClosureFeesUpdated
-        - MarketSwapFeesUpdated
-        - MaxWithdrawalUpdated
-        - PauseState
-        - ReserveFactorUpdated
-        - TimelockValidityDeposit
-        - YieldConversionFeesUpdated
-        - savingsAPRupdated
         - DepositAdded
         - DepositWithdrawal
         - NewDeposit
-        - PauseState1
-        - DiamondCut
-        - PauseState2
-        - BorrowInterestUpdated
-        - DepositInterestUpdated
-        - InterestFactorsUpdated
-        - InterestsUpdated
-        - PauseState3
-        - TokenSupportAdded
-        - TokensIssued
-        - DiamondCut1
         - Liquidation
-        - PauseState4
         - AddCollateral
         - MarketSwapped
-        - PauseState5
         - WithdrawCollateral
         - WithdrawPartialLoan
         - NewLoan
-        - PauseState6
         - LoanRepaid
-        - PauseState7
-        - PauseState8
-        - PauseState9
-        - Market2Added
-        - Market2Removed
-        - Market2Updated
-        - MarketSupportAdded
-        - MarketSupportRemoved
-        - MarketSupportUpdated
-        - PauseState10
       abis:
         - name: OpenProtocol
           file: ./abis/OpenProtocol.json
       eventHandlers:
-        - event: BorrowAprAccrued(indexed address,indexed bytes32,indexed bytes32,uint256,uint256,uint256)
-          handler: handleBorrowAprAccrued
-        - event: LoanFee(indexed address,bytes32,bytes32,uint256,uint256)
-          handler: handleLoanFee
-        - event: WithdrawCollateralFee(indexed address,indexed bytes32,indexed bytes32,uint256,uint256)
-          handler: handleWithdrawCollateralFee
-        - event: SavingsAprAccrued(indexed address,indexed bytes32,indexed bytes32,uint256,uint256,uint256)
-          handler: handleSavingsAprAccrued
-        - event: BorrowInterestRateUpdated(bytes32,bytes32,uint256,uint256)
-          handler: handleBorrowInterestRateUpdated
-        - event: DepositInterestRateUpdated(bytes32,bytes32,uint256,uint256)
-          handler: handleDepositInterestRateUpdated
-        - event: APRupdated(indexed address,indexed uint256,uint256)
-          handler: handleAPRupdated
-        - event: CollateralFactorUpdated(indexed address,uint256,indexed uint256,uint256)
-          handler: handleCollateralFactorUpdated
-        - event: CollateralPreClosureFeesUpdated(indexed address,uint256,indexed uint256,uint256)
-          handler: handleCollateralPreClosureFeesUpdated
-        - event: CollateralReleaseFeesUpdated(indexed address,uint256,indexed uint256,uint256)
-          handler: handleCollateralReleaseFeesUpdated
-        - event: CommitmentAdded(indexed address,indexed bytes32,indexed uint256,uint256)
-          handler: handleCommitmentAdded
-        - event: DepositPreClosureFeesUpdated(indexed address,uint256,indexed uint256,uint256)
-          handler: handleDepositPreClosureFeesUpdated
-        - event: DepositWithdrawalFeesUpdated(indexed address,uint256,indexed uint256,uint256)
-          handler: handleDepositWithdrawalFeesUpdated
-        - event: LoanClosureFeesUpdated(indexed address,uint256,indexed uint256,uint256)
-          handler: handleLoanClosureFeesUpdated
-        - event: LoanIssuanceFeesUpdated(indexed address,uint256,indexed uint256,uint256)
-          handler: handleLoanIssuanceFeesUpdated
-        - event: LoanPreClosureFeesUpdated(indexed address,uint256,indexed uint256,uint256)
-          handler: handleLoanPreClosureFeesUpdated
-        - event: MarketSwapFeesUpdated(indexed address,uint256,indexed uint256,uint256)
-          handler: handleMarketSwapFeesUpdated
-        - event: MaxWithdrawalUpdated(indexed address,indexed uint256,indexed uint256,uint256,uint256,uint256)
-          handler: handleMaxWithdrawalUpdated
-        - event: PauseState(indexed address,bool)
-          handler: handlePauseState
-        - event: ReserveFactorUpdated(indexed address,uint256,indexed uint256,uint256)
-          handler: handleReserveFactorUpdated
-        - event: TimelockValidityDeposit(indexed address,uint256,indexed uint256,uint256)
-          handler: handleTimelockValidityDeposit
-        - event: YieldConversionFeesUpdated(indexed address,uint256,indexed uint256,uint256)
-          handler: handleYieldConversionFeesUpdated
-        - event: savingsAPRupdated(indexed address,indexed uint256,uint256)
-          handler: handlesavingsAPRupdated
         - event: DepositAdded(indexed address,indexed bytes32,indexed bytes32,uint256,uint256,uint256)
           handler: handleDepositAdded
         - event: DepositWithdrawal(indexed address,indexed bytes32,indexed bytes32,uint256,uint256,uint256,uint256)
           handler: handleDepositWithdrawal
         - event: NewDeposit(indexed address,indexed bytes32,indexed bytes32,uint256,uint256,uint256)
           handler: handleNewDeposit
-        - event: PauseState(indexed address,bool)
-          handler: handlePauseState1
-        - event: DiamondCut((address,uint8,bytes4[])[],address,bytes)
-          handler: handleDiamondCut
-        - event: PauseState(indexed address,bool)
-          handler: handlePauseState2
-        - event: BorrowInterestUpdated(indexed address,indexed uint256,indexed uint256,uint256)
-          handler: handleBorrowInterestUpdated
-        - event: DepositInterestUpdated(indexed address,indexed uint256,indexed uint256,uint256)
-          handler: handleDepositInterestUpdated
-        - event: InterestFactorsUpdated(indexed address,indexed uint256,indexed uint256,uint256)
-          handler: handleInterestFactorsUpdated
-        - event: InterestsUpdated(indexed address,uint256)
-          handler: handleInterestsUpdated
-        - event: PauseState(indexed address,bool)
-          handler: handlePauseState3
-        - event: TokenSupportAdded(indexed address,indexed uint256,indexed uint256,uint256)
-          handler: handleTokenSupportAdded
-        - event: TokensIssued(indexed address,indexed address,indexed uint256,uint256)
-          handler: handleTokensIssued
-        - event: DiamondCut((address,uint8,bytes4[])[],address,bytes)
-          handler: handleDiamondCut1
         - event: Liquidation(indexed address,indexed bytes32,indexed bytes32,uint256,uint256)
           handler: handleLiquidation
-        - event: PauseState(indexed address,bool)
-          handler: handlePauseState4
         - event: AddCollateral(indexed address,indexed bytes32,indexed bytes32,uint256,uint256,uint256)
           handler: handleAddCollateral
         - event: MarketSwapped(indexed address,indexed bytes32,indexed bytes32,bool,bytes32,uint256,uint256)
           handler: handleMarketSwapped
-        - event: PauseState(indexed address,bool)
-          handler: handlePauseState5
         - event: WithdrawCollateral(indexed address,indexed bytes32,indexed bytes32,uint256,uint256,uint256)
           handler: handleWithdrawCollateral
         - event: WithdrawPartialLoan(indexed address,uint256,uint256,indexed bytes32,indexed bytes32,uint256)
           handler: handleWithdrawPartialLoan
         - event: NewLoan(indexed address,indexed bytes32,indexed bytes32,uint256,bytes32,uint256,uint256,uint256,uint256)
           handler: handleNewLoan
-        - event: PauseState(indexed address,bool)
-          handler: handlePauseState6
         - event: LoanRepaid(indexed address,uint256,indexed bytes32,indexed bytes32,uint256,uint256,uint256)
           handler: handleLoanRepaid
-        - event: PauseState(indexed address,bool)
-          handler: handlePauseState7
-        - event: PauseState(indexed address,bool)
-          handler: handlePauseState8
-        - event: PauseState(indexed address,bool)
-          handler: handlePauseState9
-        - event: Market2Added(indexed bytes32,uint256,indexed address,uint256)
-          handler: handleMarket2Added
-        - event: Market2Removed(indexed bytes32,uint256)
-          handler: handleMarket2Removed
-        - event: Market2Updated(indexed bytes32,uint256,indexed address,uint256)
-          handler: handleMarket2Updated
-        - event: MarketSupportAdded(indexed bytes32,uint256,indexed address,uint256)
-          handler: handleMarketSupportAdded
-        - event: MarketSupportRemoved(indexed bytes32,uint256)
-          handler: handleMarketSupportRemoved
-        - event: MarketSupportUpdated(indexed bytes32,uint256,indexed address,uint256)
-          handler: handleMarketSupportUpdated
-        - event: PauseState(indexed address,bool)
-          handler: handlePauseState10
       file: ./src/open-protocol.ts

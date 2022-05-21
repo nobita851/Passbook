@@ -1,6 +1,39 @@
-type ExampleEntity @entity {
+enum Operation {
+  NewDeposit,
+  AddToDeposit,
+  WithdrawDeposit
+  NewLoan,
+  AddCollateral,
+  SwappedLoan,
+  Repaid,
+  Liquidated
+}
+
+type Loan @entity {
   id: ID!
-  count: BigInt!
-  account: Bytes! # address
-  market: Bytes! # bytes32
+  actions: [Action!]!
+}
+
+type Deposit @entity {
+  id: ID!
+  actions: [Action!]!
+}
+
+type Action @entity {
+  id: ID!
+  hash: Bytes!
+  market: String!
+  commitment: String!
+  action: Operation!
+  timestamp: Int!
+}
+
+type User @entity {
+  id: ID!
+  "Wallet address of user"
+  address: Bytes!
+  "Loans borrowed by the user"
+  loans: [Loan!]!
+  "Deposits made by the user"
+  deposits: [Deposit!]!
 }
