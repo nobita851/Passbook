@@ -28,7 +28,7 @@ type Action @entity {
   commitment: String!
   amount: BigInt!
   action: Operation!
-  timestamp: Int!
+  date: String!
 }
 
 type User @entity {

@@ -169,13 +169,13 @@ export class Action extends Entity {
     this.set("action", Value.fromString(value));
   }
 
-  get timestamp(): i32 {
-    let value = this.get("timestamp");
-    return value!.toI32();
+  get date(): string {
+    let value = this.get("date");
+    return value!.toString();
   }
 
-  set timestamp(value: i32) {
-    this.set("timestamp", Value.fromI32(value));
+  set date(value: string) {
+    this.set("date", Value.fromString(value));
   }
 }
 

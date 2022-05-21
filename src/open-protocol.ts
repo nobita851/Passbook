@@ -24,6 +24,7 @@ export function handleDepositAdded(event: DepositAdded): void {
     return;
   }
 
+  let date = new Date(event.params.time.toI64());
   let deposit = new Deposit(event.transaction.hash.toHex());
   let action = new Action(event.transaction.hash.toHex());
 
@@ -32,7 +33,7 @@ export function handleDepositAdded(event: DepositAdded): void {
   action.commitment = event.params.commitment.toString();
   action.amount = event.params.amount;
   action.action = "AddToDeposit";
-  action.timestamp = event.params.time.toI64();
+  action.date = date.toString();
   action.save();
 
   deposit.actions.push(event.transaction.hash.toHexString());
@@ -52,6 +53,8 @@ export function handleDepositWithdrawal(event: DepositWithdrawal): void {
     return;
   }
 
+  let date = new Date(event.params.timestamp.toI64());
+
   let deposit = new Deposit(event.transaction.hash.toHex());
   let action = new Action(event.transaction.hash.toHex());
 
@@ -60,7 +63,7 @@ export function handleDepositWithdrawal(event: DepositWithdrawal): void {
   action.commitment = event.params.commitment.toString();
   action.amount = event.params.amount;
   action.action = "WithdrawDeposit";
-  action.timestamp = event.params.timestamp.toI64();
+  action.date = date.toString();
   action.save();
 
   deposit.actions.push(event.transaction.hash.toHexString());
@@ -78,6 +81,7 @@ export function handleNewDeposit(event: NewDeposit): void {
     user.save();
   }
 
+  let date = new Date(event.params.time.toI64());
   let deposit = new Deposit(event.transaction.hash.toHex());
   let action = new Action(event.transaction.hash.toHex());
 
@@ -86,7 +90,7 @@ export function handleNewDeposit(event: NewDeposit): void {
   action.commitment = event.params.commitment.toString();
   action.amount = event.params.amount
   action.action = "NewDeposit"
-  action.timestamp = event.params.time.toI64()
+  action.date = date.toString();
   action.save();
 
   deposit.actions.push(event.transaction.hash.toHexString());
@@ -106,6 +110,7 @@ export function handleLiquidation(event: Liquidation): void {
     return;
   }
 
+  let date = new Date(event.params.time.toI64());
   let loan = new Loan(event.transaction.hash.toHex());
   let action = new Action(event.transaction.hash.toHex());
 
@@ -114,7 +119,7 @@ export function handleLiquidation(event: Liquidation): void {
   action.commitment = event.params.commitment.toString();
   action.amount = event.params.amount;
   action.action = "Liquidated";
-  action.timestamp = event.params.time.toI64();
+  action.date = date.toString();
   action.save();
 
   loan.actions.push(event.transaction.hash.toHexString());
@@ -134,6 +139,7 @@ export function handleAddCollateral(event: AddCollateral): void {
     return;
   }
 
+  let date = new Date(event.params.timestamp.toI64());
   let loan = new Loan(event.transaction.hash.toHex());
   let action = new Action(event.transaction.hash.toHex());
 
@@ -142,7 +148,7 @@ export function handleAddCollateral(event: AddCollateral): void {
   action.commitment = event.params.commitment.toString();
   action.amount = event.params.amount;
   action.action = "AddCollateral";
-  action.timestamp = event.params.timestamp.toI64();
+  action.date = date.toString()
   action.save();
 
   loan.actions.push(event.transaction.hash.toHexString());
@@ -162,6 +168,7 @@ export function handleMarketSwapped(event: MarketSwapped): void {
     return;
   }
 
+  let date = new Date(event.params.timestamp.toI64());
   let loan = new Loan(event.transaction.hash.toHex());
   let action = new Action(event.transaction.hash.toHex());
 
@@ -170,7 +177,7 @@ export function handleMarketSwapped(event: MarketSwapped): void {
   action.commitment = event.params.commitment.toString();
   action.amount = event.params.amount;
   action.action = "SwappedLoan";
-  action.timestamp = event.params.timestamp.toI64();
+  action.date = date.toString()
   action.save();
 
   loan.actions.push(event.transaction.hash.toHexString());
@@ -190,6 +197,7 @@ export function handleWithdrawCollateral(event: WithdrawCollateral): void {
     return;
   }
 
+  let date = new Date(event.params.timestamp.toI64());
   let loan = new Loan(event.transaction.hash.toHex());
   let action = new Action(event.transaction.hash.toHex());
 
@@ -198,7 +206,7 @@ export function handleWithdrawCollateral(event: WithdrawCollateral): void {
   action.commitment = event.params.commitment.toString();
   action.amount = event.params.amount;
   action.action = "WithdrawCollateral";
-  action.timestamp = event.params.timestamp.toI64();
+  action.date = date.toString()
   action.save();
 
   loan.actions.push(event.transaction.hash.toHexString());
@@ -218,6 +226,7 @@ export function handleWithdrawPartialLoan(event: WithdrawPartialLoan): void {
     return;
   }
 
+  let date = new Date(event.params.timestamp.toI64());
   let loan = new Loan(event.transaction.hash.toHex());
   let action = new Action(event.transaction.hash.toHex());
 
@@ -226,7 +235,7 @@ export function handleWithdrawPartialLoan(event: WithdrawPartialLoan): void {
   action.commitment = event.params.commitment.toString();
   action.amount = event.params.amount;
   action.action = "WithdrawLoan";
-  action.timestamp = event.params.timestamp.toI64();
+  action.date = date.toString()
   action.save();
 
   loan.actions.push(event.transaction.hash.toHexString());
@@ -244,6 +253,7 @@ export function handleNewLoan(event: NewLoan): void {
     user.save();
   }  
 
+  let date = new Date(event.params.time.toI64());
   let loan = new Loan(event.transaction.hash.toHex());
   let action = new Action(event.transaction.hash.toHex());
 
@@ -252,7 +262,7 @@ export function handleNewLoan(event: NewLoan): void {
   action.commitment = event.params.commitment.toString();
   action.amount = event.params.loanAmount;
   action.action = "NewLoan";
-  action.timestamp = event.params.time.toI64();
+  action.date = date.toString();
   action.save();
 
   loan.actions.push(event.transaction.hash.toHexString());
@@ -272,6 +282,8 @@ export function handleLoanRepaid(event: LoanRepaid): void {
     return;
   }
 
+  let date = new Date(event.params.timestamp.toI64());
+
   let loan = new Loan(event.transaction.hash.toHex());
   let action = new Action(event.transaction.hash.toHex());
 
@@ -280,7 +292,7 @@ export function handleLoanRepaid(event: LoanRepaid): void {
   action.commitment = event.params.commitment.toString();
   action.amount = event.params.repaidAmount;
   action.action = "LoanRepaid";
-  action.timestamp = event.params.timestamp.toI64();
+  action.date = date.toString();
   action.save();
 
   loan.actions.push(event.transaction.hash.toHexString());
