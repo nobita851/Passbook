@@ -208,8 +208,84 @@ export function handleWithdrawCollateral(event: WithdrawCollateral): void {
   user.save();
 }
 
-export function handleWithdrawPartialLoan(event: WithdrawPartialLoan): void {}
+export function handleWithdrawPartialLoan(event: WithdrawPartialLoan): void {
+  let user = User.load(event.params.account.toHex());
+  if (!user) {
+    log.error(
+      `[handleWithdrawPartialLoan|${event.transaction.hash.toHexString()}] User not found`,
+      []
+    );
+    return;
+  }
 
-export function handleNewLoan(event: NewLoan): void {}
+  let loan = new Loan(event.transaction.hash.toHex());
+  let action = new Action(event.transaction.hash.toHex());
 
-export function handleLoanRepaid(event: LoanRepaid): void {}
+  action.hash = event.transaction.hash.toHexString();
+  action.market = event.params.market.toString();
+  action.commitment = event.params.commitment.toString();
+  action.amount = event.params.amount;
+  action.action = "WithdrawLoan";
+  action.timestamp = event.params.timestamp.toI64();
+  action.save();
+
+  loan.actions.push(event.transaction.hash.toHexString());
+  loan.save();
+
+  user.loans.push(event.transaction.hash.toHexString());
+  user.save();
+}
+
+export function handleNewLoan(event: NewLoan): void {
+  let user = User.load(event.params.account.toHex());
+  if (!user) {
+    user = new User(event.params.account.toHex());
+    user.address = event.params.account;
+    user.save();
+  }  
+
+  let loan = new Loan(event.transaction.hash.toHex());
+  let action = new Action(event.transaction.hash.toHex());
+
+  action.hash = event.transaction.hash.toHexString();
+  action.market = event.params.loanMarket.toString();
+  action.commitment = event.params.commitment.toString();
+  action.amount = event.params.loanAmount;
+  action.action = "NewLoan";
+  action.timestamp = event.params.time.toI64();
+  action.save();
+
+  loan.actions.push(event.transaction.hash.toHexString());
+  loan.save();
+
+  user.loans.push(event.transaction.hash.toHexString());
+  user.save();
+}
+
+export function handleLoanRepaid(event: LoanRepaid): void {
+  let user = User.load(event.params.account.toHex());
+  if (!user) {
+    log.error(
+      `[handleLoanRepaid|${event.transaction.hash.toHexString()}] User not found`,
+      []
+    );
+    return;
+  }
+
+  let loan = new Loan(event.transaction.hash.toHex());
+  let action = new Action(event.transaction.hash.toHex());
+
+  action.hash = event.transaction.hash.toHexString();
+  action.market = event.params.market.toString();
+  action.commitment = event.params.commitment.toString();
+  action.amount = event.params.repaidAmount;
+  action.action = "LoanRepaid";
+  action.timestamp = event.params.timestamp.toI64();
+  action.save();
+
+  loan.actions.push(event.transaction.hash.toHexString());
+  loan.save();
+
+  user.loans.push(event.transaction.hash.toHexString());
+  user.save();
+}

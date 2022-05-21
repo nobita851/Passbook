@@ -5,8 +5,9 @@ enum Operation {
   NewLoan,
   AddCollateral,
   WithdrawCollateral,
+  WithdrawLoan,
   SwappedLoan,
-  Repaid,
+  LoanRepaid,
   Liquidated
 }
 
