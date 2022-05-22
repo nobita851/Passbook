@@ -12,7 +12,7 @@ import {
   NewLoan,
   LoanRepaid
 } from "../generated/OpenProtocol/OpenProtocol"
-import { Deposit, Loan, User, Action } from "../generated/schema"
+import { Deposit, Loan, User } from "../generated/schema"
 
 export function handleDepositAdded(event: DepositAdded): void {
   let user = User.load(event.params.account.toHex());
@@ -26,19 +26,15 @@ export function handleDepositAdded(event: DepositAdded): void {
 
   let date = new Date(event.params.time.toI64());
   let deposit = new Deposit(event.transaction.hash.toHex());
-  let action = new Action(event.transaction.hash.toHex());
 
-  action.hash = event.transaction.hash.toHexString();
-  action.market = event.params.market.toString();
-  action.commitment = event.params.commitment.toString();
-  action.amount = event.params.amount;
-  action.action = "AddToDeposit";
-  action.date = date.toString();
-  action.save();
-
-  deposit.actions = event.transaction.hash.toHex();
-  deposit.save();
-
+  deposit.hash = event.transaction.hash.toHexString();
+  deposit.market = event.params.market.toString();
+  deposit.commitment = event.params.commitment.toString();
+  deposit.amount = event.params.amount;
+  deposit.action = "AddToDeposit";
+  deposit.date = date.toString();
+  deposit.save();  
+  
   user.deposits.push(event.transaction.hash.toHex());
   user.save();
 }
@@ -56,19 +52,15 @@ export function handleDepositWithdrawal(event: DepositWithdrawal): void {
   let date = new Date(event.params.timestamp.toI64());
 
   let deposit = new Deposit(event.transaction.hash.toHex());
-  let action = new Action(event.transaction.hash.toHex());
 
-  action.hash = event.transaction.hash.toHexString();
-  action.market = event.params.market.toString();
-  action.commitment = event.params.commitment.toString();
-  action.amount = event.params.amount;
-  action.action = "WithdrawDeposit";
-  action.date = date.toString();
-  action.save();
-
-  deposit.actions = event.transaction.hash.toHex();
+  deposit.hash = event.transaction.hash.toHexString();
+  deposit.market = event.params.market.toString();
+  deposit.commitment = event.params.commitment.toString();
+  deposit.amount = event.params.amount;
+  deposit.action = "WithdrawDeposit";
+  deposit.date = date.toString();
   deposit.save();
-
+  
   user.deposits.push(event.transaction.hash.toHex());
   user.save();
 }
@@ -83,18 +75,14 @@ export function handleNewDeposit(event: NewDeposit): void {
 
   let date = new Date(event.params.time.toI64());
   let deposit = new Deposit(event.transaction.hash.toHex());
-  let action = new Action(event.transaction.hash.toHex());
 
-  action.hash = event.transaction.hash.toHexString();
-  action.market = event.params.market.toString();
-  action.commitment = event.params.commitment.toString();
-  action.amount = event.params.amount
-  action.action = "NewDeposit"
-  action.date = date.toString();
-  action.save();
-
-  deposit.actions = event.transaction.hash.toHex();
-  deposit.save()
+  deposit.hash = event.transaction.hash.toHexString();
+  deposit.market = event.params.market.toString();
+  deposit.commitment = event.params.commitment.toString();
+  deposit.amount = event.params.amount
+  deposit.action = "NewDeposit"
+  deposit.date = date.toString();
+  deposit.save();
 
   user.deposits.push(event.transaction.hash.toHex());
   user.save()
@@ -112,17 +100,13 @@ export function handleLiquidation(event: Liquidation): void {
 
   let date = new Date(event.params.time.toI64());
   let loan = new Loan(event.transaction.hash.toHex());
-  let action = new Action(event.transaction.hash.toHex());
 
-  action.hash = event.transaction.hash.toHexString();
-  action.market = event.params.market.toString();
-  action.commitment = event.params.commitment.toString();
-  action.amount = event.params.amount;
-  action.action = "Liquidated";
-  action.date = date.toString();
-  action.save();
-
-  loan.actions = event.transaction.hash.toHex();
+  loan.hash = event.transaction.hash.toHexString();
+  loan.market = event.params.market.toString();
+  loan.commitment = event.params.commitment.toString();
+  loan.amount = event.params.amount;
+  loan.action = "Liquidated";
+  loan.date = date.toString();
   loan.save();
 
   user.loans.push(event.transaction.hash.toHex());
@@ -141,17 +125,13 @@ export function handleAddCollateral(event: AddCollateral): void {
 
   let date = new Date(event.params.timestamp.toI64());
   let loan = new Loan(event.transaction.hash.toHex());
-  let action = new Action(event.transaction.hash.toHex());
 
-  action.hash = event.transaction.hash.toHexString();
-  action.market = event.params.market.toString();
-  action.commitment = event.params.commitment.toString();
-  action.amount = event.params.amount;
-  action.action = "AddCollateral";
-  action.date = date.toString()
-  action.save();
-
-  loan.actions = event.transaction.hash.toHex();
+  loan.hash = event.transaction.hash.toHexString();
+  loan.market = event.params.market.toString();
+  loan.commitment = event.params.commitment.toString();
+  loan.amount = event.params.amount;
+  loan.action = "AddCollateral";
+  loan.date = date.toString()
   loan.save();
 
   user.loans.push(event.transaction.hash.toHex());
@@ -170,17 +150,13 @@ export function handleMarketSwapped(event: MarketSwapped): void {
 
   let date = new Date(event.params.timestamp.toI64());
   let loan = new Loan(event.transaction.hash.toHex());
-  let action = new Action(event.transaction.hash.toHex());
 
-  action.hash = event.transaction.hash.toHexString();
-  action.market = event.params.currentMarket.toString();
-  action.commitment = event.params.commitment.toString();
-  action.amount = event.params.amount;
-  action.action = "SwappedLoan";
-  action.date = date.toString()
-  action.save();
-
-  loan.actions = event.transaction.hash.toHex();
+  loan.hash = event.transaction.hash.toHexString();
+  loan.market = event.params.currentMarket.toString();
+  loan.commitment = event.params.commitment.toString();
+  loan.amount = event.params.amount;
+  loan.action = "SwappedLoan";
+  loan.date = date.toString()
   loan.save();
 
   user.loans.push(event.transaction.hash.toHex());
@@ -199,17 +175,13 @@ export function handleWithdrawCollateral(event: WithdrawCollateral): void {
 
   let date = new Date(event.params.timestamp.toI64());
   let loan = new Loan(event.transaction.hash.toHex());
-  let action = new Action(event.transaction.hash.toHex());
 
-  action.hash = event.transaction.hash.toHexString();
-  action.market = event.params.market.toString();
-  action.commitment = event.params.commitment.toString();
-  action.amount = event.params.amount;
-  action.action = "WithdrawCollateral";
-  action.date = date.toString()
-  action.save();
-
-  loan.actions = event.transaction.hash.toHex();
+  loan.hash = event.transaction.hash.toHexString();
+  loan.market = event.params.market.toString();
+  loan.commitment = event.params.commitment.toString();
+  loan.amount = event.params.amount;
+  loan.action = "WithdrawCollateral";
+  loan.date = date.toString()
   loan.save();
 
   user.loans.push(event.transaction.hash.toHex());
@@ -228,17 +200,13 @@ export function handleWithdrawPartialLoan(event: WithdrawPartialLoan): void {
 
   let date = new Date(event.params.timestamp.toI64());
   let loan = new Loan(event.transaction.hash.toHex());
-  let action = new Action(event.transaction.hash.toHex());
 
-  action.hash = event.transaction.hash.toHexString();
-  action.market = event.params.market.toString();
-  action.commitment = event.params.commitment.toString();
-  action.amount = event.params.amount;
-  action.action = "WithdrawLoan";
-  action.date = date.toString()
-  action.save();
-
-  loan.actions = event.transaction.hash.toHex();
+  loan.hash = event.transaction.hash.toHexString();
+  loan.market = event.params.market.toString();
+  loan.commitment = event.params.commitment.toString();
+  loan.amount = event.params.amount;
+  loan.action = "WithdrawLoan";
+  loan.date = date.toString()
   loan.save();
 
   user.loans.push(event.transaction.hash.toHex());
@@ -255,17 +223,13 @@ export function handleNewLoan(event: NewLoan): void {
 
   let date = new Date(event.params.time.toI64());
   let loan = new Loan(event.transaction.hash.toHex());
-  let action = new Action(event.transaction.hash.toHex());
 
-  action.hash = event.transaction.hash.toHexString();
-  action.market = event.params.loanMarket.toString();
-  action.commitment = event.params.commitment.toString();
-  action.amount = event.params.loanAmount;
-  action.action = "NewLoan";
-  action.date = date.toString();
-  action.save();
-
-  loan.actions = event.transaction.hash.toHex();
+  loan.hash = event.transaction.hash.toHexString();
+  loan.market = event.params.loanMarket.toString();
+  loan.commitment = event.params.commitment.toString();
+  loan.amount = event.params.loanAmount;
+  loan.action = "NewLoan";
+  loan.date = date.toString();
   loan.save();
 
   user.loans.push(event.transaction.hash.toHex());
@@ -285,17 +249,15 @@ export function handleLoanRepaid(event: LoanRepaid): void {
   let date = new Date(event.params.timestamp.toI64());
 
   let loan = new Loan(event.transaction.hash.toHex());
-  let action = new Action(event.transaction.hash.toHex());
 
-  action.hash = event.transaction.hash.toHexString();
-  action.market = event.params.market.toString();
-  action.commitment = event.params.commitment.toString();
-  action.amount = event.params.repaidAmount;
-  action.action = "LoanRepaid";
-  action.date = date.toString();
-  action.save();
+  loan.hash = event.transaction.hash.toHexString();
+  loan.market = event.params.market.toString();
+  loan.commitment = event.params.commitment.toString();
+  loan.amount = event.params.repaidAmount;
+  loan.action = "LoanRepaid";
+  loan.date = date.toString();
+  loan.save();
 
-  loan.actions = event.transaction.hash.toHex();
   loan.save();
 
   user.loans.push(event.transaction.hash.toHex());

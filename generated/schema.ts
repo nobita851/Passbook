@@ -42,13 +42,58 @@ export class Loan extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get actions(): string {
-    let value = this.get("actions");
+  get hash(): string {
+    let value = this.get("hash");
     return value!.toString();
   }
 
-  set actions(value: string) {
-    this.set("actions", Value.fromString(value));
+  set hash(value: string) {
+    this.set("hash", Value.fromString(value));
+  }
+
+  get market(): string {
+    let value = this.get("market");
+    return value!.toString();
+  }
+
+  set market(value: string) {
+    this.set("market", Value.fromString(value));
+  }
+
+  get commitment(): string {
+    let value = this.get("commitment");
+    return value!.toString();
+  }
+
+  set commitment(value: string) {
+    this.set("commitment", Value.fromString(value));
+  }
+
+  get amount(): BigInt {
+    let value = this.get("amount");
+    return value!.toBigInt();
+  }
+
+  set amount(value: BigInt) {
+    this.set("amount", Value.fromBigInt(value));
+  }
+
+  get action(): string {
+    let value = this.get("action");
+    return value!.toString();
+  }
+
+  set action(value: string) {
+    this.set("action", Value.fromString(value));
+  }
+
+  get date(): string {
+    let value = this.get("date");
+    return value!.toString();
+  }
+
+  set date(value: string) {
+    this.set("date", Value.fromString(value));
   }
 }
 
@@ -72,47 +117,6 @@ export class Deposit extends Entity {
 
   static load(id: string): Deposit | null {
     return changetype<Deposit | null>(store.get("Deposit", id));
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get actions(): string {
-    let value = this.get("actions");
-    return value!.toString();
-  }
-
-  set actions(value: string) {
-    this.set("actions", Value.fromString(value));
-  }
-}
-
-export class Action extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save Action entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        `Entities of type Action must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
-      );
-      store.set("Action", id.toString(), this);
-    }
-  }
-
-  static load(id: string): Action | null {
-    return changetype<Action | null>(store.get("Action", id));
   }
 
   get id(): string {
