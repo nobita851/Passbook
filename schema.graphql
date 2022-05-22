@@ -1,7 +1,10 @@
-enum Operation {
+enum DepositAction {
   NewDeposit,
   AddToDeposit,
   WithdrawDeposit
+}
+
+enum LoanAction{
   NewLoan,
   AddCollateral,
   WithdrawCollateral,
@@ -13,30 +16,23 @@ enum Operation {
 
 type Loan @entity {
   id: ID!
-  hash: String!
+  address: String!
   market: String!
   commitment: String!
   amount: BigInt!
-  action: Operation!
+  action: LoanAction!
   date: String!
+  timestamp: Int!
 }
 
 type Deposit @entity {
   id: ID!
-  hash: String!
+  address: String!
   market: String!
   commitment: String!
   amount: BigInt!
-  action: Operation!
+  action: DepositAction!
   date: String!
+  timestamp: Int!
 }
 
-type User @entity {
-  id: ID!
-  "Wallet address of user"
-  address: Bytes!
-  "Loans borrowed by the user"
-  loans: [Loan!]!
-  "Deposits made by the user"
-  deposits: [Deposit!]!
-}
