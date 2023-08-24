@@ -1,0 +1,2 @@
+# On-Chain User Passbook
+This project represents my attempt to learn about The Graph Protocol by creating a simplified "passbook" to record and track on-chain user activities within a DeFi lending protocol. Just like a traditional passbook, this repository aims to showcase how The Graph Protocol can be utilized to capture, store, and retrieve on-chain user interactions in a structured and accessible manner.
